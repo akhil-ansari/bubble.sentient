@@ -8,123 +8,102 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Orbitron', sans-serif;
-      background: radial-gradient(circle at center, #0a001a 0%, #000 70%);
+      background: #000;
       color: white;
-      margin: 0;
-      padding: 2rem;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 2rem;
+    }
+
+    /* === BIG AGI BRAIN === */
+    .agi-brain {
+      position: relative;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle at 40% 40%, #4a00e0 0%, #8e2de2 30%, #1a0033 70%);
+      border-radius: 50% 45% 50% 48%;
+      box-shadow: 
+        0 0 80px #8a2be2,
+        0 0 160px #00ffff,
+        inset 0 0 60px rgba(138,43,226,0.4);
+      animation: pulse 4s ease-in-out infinite;
       overflow: hidden;
     }
 
-    /* CENTRAL AGI BRAIN */
-    .brain-core {
-      position: relative;
-      width: 260px;
-      height: 260px;
-      background: radial-gradient(circle, #8a2be2 10%, #00ffff 50%, #1a0033 100%);
-      border-radius: 50%;
-      box-shadow: 
-        0 0 60px #8a2be2,
-        0 0 120px #00ffff,
-        inset 0 0 40px rgba(255,255,255,0.2);
-      animation: pulse-brain 3s ease-in-out infinite;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 80px #8a2be2, 0 0 160px #00ffff, inset 0 0 60px rgba(138,43,226,0.4); }
+      50% { transform: scale(1.02); box-shadow: 0 0 100px #ff00ff, 0 0 200px #00ffff, inset 0 0 80px rgba(255,0,255,0.5); }
     }
 
-    .brain-icon {
-      font-size: 6rem;
-      color: white;
-      text-shadow: 0 0 30px #00ffff;
-      animation: float-icon 4s ease-in-out infinite;
-    }
-
-    @keyframes pulse-brain {
-      0%, 100% { box-shadow: 0 0 60px #8a2be2, 0 0 120px #00ffff, inset 0 0 40px rgba(255,255,255,0.2); }
-      50% { box-shadow: 0 0 80px #ff00ff, 0 0 160px #00ffff, inset 0 0 60px rgba(255,255,255,0.3); }
-    }
-
-    @keyframes float-icon {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-
-    /* ORBITING BUBBLES */
-    .orbit-bubble {
+    /* Brain Icon in Center */
+    .brain-center {
       position: absolute;
-      width: 90px;
-      height: 90px;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 5rem;
+      color: #00ffff;
+      text-shadow: 0 0 30px #00ffff;
+      z-index: 5;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float { 0%,100% { transform: translate(-50%, -50%) translateY(0); } 50% { transform: translate(-50%, -50%) translateY(-8px); } }
+
+    /* === 6 BRAIN SECTIONS (Bubbles INSIDE) === */
+    .brain-section {
+      position: absolute;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
       cursor: pointer;
-      box-shadow: 0 8px 20px rgba(0,255,255,0.3);
-      backdrop-filter: blur(6px);
+      backdrop-filter: blur(4px);
+      box-shadow: inset 0 0 20px rgba(255,255,255,0.1);
     }
 
-    .orbit-bubble:hover {
+    .brain-section:hover {
       transform: scale(1.4) !important;
       z-index: 20;
-      box-shadow: 0 0 40px #00ffff;
+      box-shadow: 0 0 50px #00ffff, inset 0 0 30px rgba(255,255,255,0.3);
     }
 
-    .bubble-content {
+    .section-icon {
+      font-size: 1.8rem;
+      transition: transform 0.3s;
+    }
+    .brain-section:hover .section-icon { transform: scale(0.7); }
+
+    .section-content {
+      position: absolute;
       opacity: 0;
       transform: scale(0.8);
-      transition: all 0.3s ease;
+      transition: all 0.4s ease;
       text-align: center;
+      font-size: 0.75rem;
       pointer-events: none;
-      font-size: 0.7rem;
-      padding: 0.5rem;
+      width: 120%;
     }
-
-    .orbit-bubble:hover .bubble-content {
+    .brain-section:hover .section-content {
       opacity: 1;
       transform: scale(1);
     }
 
-    .bubble-icon {
-      font-size: 1.8rem;
-      transition: transform 0.3s;
-    }
-    .orbit-bubble:hover .bubble-icon { transform: scale(0.7); }
+    /* === SECTION POSITIONS (Inside Brain) === */
+    #mission   { top: 18%; left: 25%; width: 80px; height: 80px; background: linear-gradient(135deg, #9c27b0, #673ab7); }
+    #vision    { top: 22%; right: 22%; width: 85px; height: 85px; background: linear-gradient(135deg, #2196f3, #03a9f4); }
+    #funding   { bottom: 30%; left: 18%; width: 75px; height: 75px; background: linear-gradient(135deg, #4caf50, #66bb6a); }
+    #team      { bottom: 25%; right: 20%; width: 90px; height: 90px; background: linear-gradient(135deg, #ff5722, #f44336); }
+    #tge       { top: 45%; left: 50%; transform: translateX(-50%); width: 95px; height: 95px; background: linear-gradient(135deg, #e91e63, #ec407a); }
+    #product   { top: 48%; right: 15%; width: 80px; height: 80px; background: linear-gradient(135deg, #00bcd4, #009688); }
 
-    /* ORBIT POSITIONS */
-    #mission   { top: -10%; left: 50%; transform: translateX(-50%); animation: orbit 12s linear infinite; }
-    #vision    { top: 50%; right: -15%; transform: translateY(-50%); animation: orbit 12s linear infinite reverse; }
-    #funding   { bottom: -10%; left: 50%; transform: translateX(-50%); animation: orbit 14s linear infinite; }
-    #team      { top: 50%; left: -15%; transform: translateY(-50%); animation: orbit 14s linear infinite reverse; }
-    #tge       { top: 20%; left: -10%; animation: orbit 10s linear infinite; }
-    #product   { bottom: 20%; right: -10%; animation: orbit 10s linear infinite reverse; }
-
-    @keyframes orbit {
-      0% { transform: translateX(-50%) rotate(0deg) translateX(180px) rotate(0deg); }
-      100% { transform: translateX(-50%) rotate(360deg) translateX(180px) rotate(-360deg); }
-    }
-
-    /* SOCIALS BUBBLE (attached to brain) */
-    #socials {
-      position: absolute;
-      bottom: -20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 70px;
-      height: 70px;
-      background: linear-gradient(45deg, #ff00ff, #00ffff);
-      box-shadow: 0 0 30px #ff00ff;
-      z-index: 15;
-    }
-
-    .tge-badge {
+    .tge-badge { 
       background: linear-gradient(45deg, #ff00ff, #00ffff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -132,11 +111,30 @@
     }
     @keyframes shimmer { 0% { background-position: 0%; } 100% { background-position: 200%; } }
 
+    /* === SOCIALS (Small bubble on brain edge) === */
+    #socials {
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(45deg, #ff00ff, #00ffff);
+      box-shadow: 0 0 30px #ff00ff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      z-index: 15;
+    }
+
+    /* === CTA === */
     .connect-btn {
       background: linear-gradient(45deg, #8a2be2, #00ffff);
-      padding: 0.6rem 1.2rem;
+      padding: 0.5rem 1rem;
       border-radius: 999px;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: 600;
       transition: all 0.3s;
     }
@@ -147,96 +145,91 @@
 
     /* Mobile */
     @media (max-width: 768px) {
-      .brain-core { width: 200px; height: 200px; }
-      .brain-icon { font-size: 4.5rem; }
-      .orbit-bubble { width: 70px; height: 70px; }
-      @keyframes orbit { 0% { transform: translateX(-50%) rotate(0deg) translateX(130px); } 100% { transform: translateX(-50%) rotate(360deg) translateX(130px); } }
+      .agi-brain { width: 340px; height: 340px; }
+      .brain-center { font-size: 3.5rem; }
+      .brain-section { width: 60px !important; height: 60px !important; }
+      .section-content { font-size: 0.6rem; }
     }
   </style>
 </head>
-<body class="text-white">
+<body>
 
   <!-- HERO -->
-  <div class="text-center z-20 mb-10">
-    <h1 class="text-5xl md:text-6xl font-black bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent mb-2">
-      SENTIENT AGI
-    </h1>
-    <p class="text-sm md:text-base text-cyan-300">**Open. Loyal. Community-Owned.**</p>
-  </div>
+  <h1 class="text-4xl md:text-5xl font-black bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent mb-6 z-10">
+    SENTIENT AGI BRAIN
+  </h1>
 
-  <!-- AGI BRAIN + ORBITING BUBBLES -->
-  <div class="relative w-full max-w-4xl mx-auto flex justify-center items-center h-screen">
+  <!-- AGI BRAIN WITH 6 INTERNAL SECTIONS -->
+  <div class="agi-brain">
 
-    <!-- CENTRAL BRAIN -->
-    <div class="brain-core">
-      <i class="fas fa-brain brain-icon"></i>
-    </div>
+    <!-- Center Icon -->
+    <i class="fas fa-brain brain-center"></i>
 
-    <!-- ORBITING BUBBLES -->
-    <div id="mission" class="orbit-bubble bg-gradient-to-r from-purple-600/90 to-indigo-600/90">
-      <i class="fas fa-bullseye bubble-icon text-yellow-300"></i>
-      <div class="bubble-content">
+    <!-- 1. Mission -->
+    <div id="mission" class="brain-section">
+      <i class="fas fa-bullseye section-icon text-yellow-300"></i>
+      <div class="section-content">
         <strong>Mission</strong><br>Open, Loyal AGI
       </div>
     </div>
 
-    <div id="vision" class="orbit-bubble bg-gradient-to-r from-indigo-600/90 to-blue-600/90">
-      <i class="fas fa-eye bubble-icon text-green-300"></i>
-      <div class="bubble-content">
+    <!-- 2. Vision -->
+    <div id="vision" class="brain-section">
+      <i class="fas fa-eye section-icon text-green-300"></i>
+      <div class="section-content">
         <strong>Vision</strong><br>GRID: 110+ Partners
       </div>
     </div>
 
-    <div id="funding" class="orbit-bubble bg-gradient-to-r from-green-600/90 to-emerald-600/90">
-      <i class="fas fa-dollar-sign bubble-icon text-lime-300"></i>
-      <div class="bubble-content">
+    <!-- 3. Funding -->
+    <div id="funding" class="brain-section">
+      <i class="fas fa-dollar-sign section-icon text-lime-300"></i>
+      <div class="section-content">
         <strong>Funding</strong><br>$85M Seed
       </div>
     </div>
 
-    <div id="team" class="orbit-bubble bg-gradient-to-r from-orange-600/90 to-red-600/90">
-      <i class="fas fa-users bubble-icon text-orange-300"></i>
-      <div class="bubble-content">
+    <!-- 4. Team -->
+    <div id="team" class="brain-section">
+      <i class="fas fa-users section-icon text-orange-300"></i>
+      <div class="section-content">
         <strong>Team</strong><br>Sandeep + 50 PhDs
       </div>
     </div>
 
-    <div id="tge" class="orbit-bubble bg-gradient-to-r from-pink-600/90 to-rose-600/90">
-      
-      
-      <i class="fas fa-rocket bubble-icon text-pink-300 tge-badge"></i>
-      <div class="bubble-content">
+    <!-- 5. TGE -->
+    <div id="tge" class="brain-section">
+      <i class="fas fa-rocket section-icon text-pink-300 tge-badge"></i>
+      <div class="section-content">
         <strong>TGE</strong><br>NOV 2025
       </div>
     </div>
 
-    <div id="product" class="orbit-bubble bg-gradient-to-r from-cyan-600/90 to-teal-600/90">
-      <i class="fas fa-cogs bubble-icon text-cyan-300"></i>
-      <div class="bubble-content">
+    <!-- 6. Product -->
+    <div id="product" class="brain-section">
+      <i class="fas fa-cogs section-icon text-cyan-300"></i>
+      <div class="section-content">
         <strong>Products</strong><br>ROMA • OML • Chat
       </div>
     </div>
 
-    <!-- SOCIALS (attached) -->
-    <div id="socials" class="orbit-bubble flex flex-col items-center justify-center text-xs">
+    <!-- SOCIALS (on brain edge) -->
+    <div id="socials" class="rounded-full flex flex-col items-center justify-center text-xs">
       <i class="fas fa-share-alt text-white mb-1"></i>
-      <div class="space-y-0.5">
-        <a href="https://x.com/SentientAGI" class="text-cyan-200 hover:text-white text-[10px]"><i class="fab fa-x-twitter"></i></a>
-        <a href="https://discord.gg/sentient" class="text-purple-200 hover:text-white text-[10px]"><i class="fab fa-discord"></i></a>
-      </div>
+      <a href="https://x.com/SentientAGI" class="text-cyan-200 text-[10px]"><i class="fab fa-x-twitter"></i></a>
+      <a href="https://discord.gg/sentient" class="text-purple-200 text-[10px]"><i class="fab fa-discord"></i></a>
     </div>
 
   </div>
 
   <!-- CTA -->
-  <div class="text-center mt-10 z-20">
-    <div class="flex gap-2 justify-center flex-wrap">
-      <a href="https://discord.gg/sentient" class="connect-btn"><i class="fab fa-discord mr-1"></i>Discord</a>
-      <a href="https://x.com/SentientAGI" class="connect-btn"><i class="fab fa-x-twitter mr-1"></i>X</a>
-      <a href="https://sentient.foundation" class="connect-btn"><i class="fas fa-globe mr-1"></i>Site</a>
-    </div>
-    <p class="mt-3 text-xs text-gray-400">gSenti • TGE Loading…</p>
+  <div class="mt-8 flex gap-2 flex-wrap justify-center z-10">
+    <a href="https://discord.gg/sentient" class="connect-btn"><i class="fab fa-discord mr-1"></i>Discord</a>
+    <a href="https://x.com/SentientAGI" class="connect-btn"><i class="fab fa-x-twitter mr-1"></i>X</a>
+    <a href="https://sentient.foundation" class="connect-btn"><i class="fas fa-globe mr-1"></i>Site</a>
   </div>
+
+  <p class="mt-3 text-xs text-gray-400">gSenti • TGE Loading…</p>
 
 </body>
 </html>

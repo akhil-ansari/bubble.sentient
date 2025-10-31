@@ -3,204 +3,240 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sentient Bubbles – Open AGI Revolution</title>
+  <title>Sentient AGI Brain</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap');
-    body { 
-      font-family: 'Orbitron', sans-serif; 
-      overflow-x: hidden;
-      background: radial-gradient(circle at 20% 80%, #0f0f23 0%, #1a0033 50%, #000 100%);
-      background-attachment: fixed;
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: radial-gradient(circle at center, #0a001a 0%, #000 70%);
+      color: white;
+      margin: 0;
+      padding: 2rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow: hidden;
     }
 
-    .bubble {
-      position: absolute;
+    /* CENTRAL AGI BRAIN */
+    .brain-core {
+      position: relative;
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, #8a2be2 10%, #00ffff 50%, #1a0033 100%);
       border-radius: 50%;
-      cursor: pointer;
-      transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-      box-shadow: 0 15px 30px rgba(0,255,255,0.25), inset 0 0 15px rgba(255,255,255,0.1);
-      backdrop-filter: blur(8px);
-      animation: float 6s ease-in-out infinite;
+      box-shadow: 
+        0 0 60px #8a2be2,
+        0 0 120px #00ffff,
+        inset 0 0 40px rgba(255,255,255,0.2);
+      animation: pulse-brain 3s ease-in-out infinite;
       display: flex;
       align-items: center;
       justify-content: center;
+      z-index: 10;
     }
 
-    .bubble:hover {
-      transform: scale(1.25) rotate(8deg);
-      box-shadow: 0 25px 50px rgba(138,43,226,0.5), 0 0 40px #00ffff;
-      z-index: 10;
+    .brain-icon {
+      font-size: 6rem;
+      color: white;
+      text-shadow: 0 0 30px #00ffff;
+      animation: float-icon 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse-brain {
+      0%, 100% { box-shadow: 0 0 60px #8a2be2, 0 0 120px #00ffff, inset 0 0 40px rgba(255,255,255,0.2); }
+      50% { box-shadow: 0 0 80px #ff00ff, 0 0 160px #00ffff, inset 0 0 60px rgba(255,255,255,0.3); }
+    }
+
+    @keyframes float-icon {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* ORBITING BUBBLES */
+    .orbit-bubble {
+      position: absolute;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0,255,255,0.3);
+      backdrop-filter: blur(6px);
+    }
+
+    .orbit-bubble:hover {
+      transform: scale(1.4) !important;
+      z-index: 20;
+      box-shadow: 0 0 40px #00ffff;
     }
 
     .bubble-content {
       opacity: 0;
-      transform: translateY(15px) scale(0.9);
-      transition: all 0.4s ease;
+      transform: scale(0.8);
+      transition: all 0.3s ease;
       text-align: center;
-      padding: 1rem;
       pointer-events: none;
+      font-size: 0.7rem;
+      padding: 0.5rem;
     }
 
-    .bubble:hover .bubble-content {
+    .orbit-bubble:hover .bubble-content {
       opacity: 1;
-      transform: translateY(0) scale(1);
+      transform: scale(1);
     }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-16px) rotate(180deg); }
+    .bubble-icon {
+      font-size: 1.8rem;
+      transition: transform 0.3s;
+    }
+    .orbit-bubble:hover .bubble-icon { transform: scale(0.7); }
+
+    /* ORBIT POSITIONS */
+    #mission   { top: -10%; left: 50%; transform: translateX(-50%); animation: orbit 12s linear infinite; }
+    #vision    { top: 50%; right: -15%; transform: translateY(-50%); animation: orbit 12s linear infinite reverse; }
+    #funding   { bottom: -10%; left: 50%; transform: translateX(-50%); animation: orbit 14s linear infinite; }
+    #team      { top: 50%; left: -15%; transform: translateY(-50%); animation: orbit 14s linear infinite reverse; }
+    #tge       { top: 20%; left: -10%; animation: orbit 10s linear infinite; }
+    #product   { bottom: 20%; right: -10%; animation: orbit 10s linear infinite reverse; }
+
+    @keyframes orbit {
+      0% { transform: translateX(-50%) rotate(0deg) translateX(180px) rotate(0deg); }
+      100% { transform: translateX(-50%) rotate(360deg) translateX(180px) rotate(-360deg); }
+    }
+
+    /* SOCIALS BUBBLE (attached to brain) */
+    #socials {
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(45deg, #ff00ff, #00ffff);
+      box-shadow: 0 0 30px #ff00ff;
+      z-index: 15;
     }
 
     .tge-badge {
       background: linear-gradient(45deg, #ff00ff, #00ffff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-size: 200%;
       animation: shimmer 2s infinite;
     }
     @keyframes shimmer { 0% { background-position: 0%; } 100% { background-position: 200%; } }
 
     .connect-btn {
       background: linear-gradient(45deg, #8a2be2, #00ffff);
-      transition: all 0.3s;
+      padding: 0.6rem 1.2rem;
       border-radius: 999px;
-      padding: 0.75rem 1.5rem;
+      font-size: 0.8rem;
       font-weight: 600;
-      font-size: 0.9rem;
+      transition: all 0.3s;
     }
     .connect-btn:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 25px #00ffff;
+      box-shadow: 0 0 20px #00ffff;
     }
 
-    /* FIXED POSITIONS – NO OVERLAP */
-    #mission   { top: 15%; left: 8%; animation-delay: 0s; }
-    #vision    { top: 12%; right: 8%; animation-delay: 1s; }
-    #funding   { bottom: 42%; left: 12%; animation-delay: 2s; }
-    #team      { bottom: 15%; right: 12%; animation-delay: 0.5s; }
-    #tge       { top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 3s; }
-    #product   { top: 65%; left: 16%; animation-delay: 1.5s; }
-    #socials   { bottom: 48%; right: 18%; animation-delay: 2.5s; }
-
-    /* Mobile Grid */
+    /* Mobile */
     @media (max-width: 768px) {
-      .bubbles-container { 
-        display: grid; 
-        grid-template-columns: 1fr 1fr; 
-        gap: 1rem; 
-        padding: 1rem;
-      }
-      .bubble { position: static !important; animation: none; }
-      .bubble:hover { transform: scale(1.15); }
+      .brain-core { width: 200px; height: 200px; }
+      .brain-icon { font-size: 4.5rem; }
+      .orbit-bubble { width: 70px; height: 70px; }
+      @keyframes orbit { 0% { transform: translateX(-50%) rotate(0deg) translateX(130px); } 100% { transform: translateX(-50%) rotate(360deg) translateX(130px); } }
     }
   </style>
 </head>
-<body class="min-h-screen text-white flex flex-col justify-center items-center p-6 relative">
+<body class="text-white">
 
-  <!-- Hero -->
-  <div class="text-center z-20 mb-16 max-w-2xl">
-    <h1 class="text-5xl md:text-6xl font-black bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent mb-3 animate-pulse">
-      <i class="fas fa-brain mr-3"></i>Sentient Bubbles
+  <!-- HERO -->
+  <div class="text-center z-20 mb-10">
+    <h1 class="text-5xl md:text-6xl font-black bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent mb-2">
+      SENTIENT AGI
     </h1>
-    <p class="text-base md:text-lg text-cyan-300 mb-6">
-      **Open-Source AGI** • **$85M Funded** • **TGE NOV 2025**
-    </p>
-    <a href="#join" class="connect-btn inline-block">
-      <i class="fab fa-discord mr-2"></i>Join 50K+ Builders
-    </a>
+    <p class="text-sm md:text-base text-cyan-300">**Open. Loyal. Community-Owned.**</p>
   </div>
 
-  <!-- Bubbles Galaxy -->
-  <div class="bubbles-container relative w-full max-w-5xl mx-auto h-screen md:h-auto">
+  <!-- AGI BRAIN + ORBITING BUBBLES -->
+  <div class="relative w-full max-w-4xl mx-auto flex justify-center items-center h-screen">
 
-    <!-- 1: Mission -->
-    <div id="mission" class="bubble w-48 h-48 bg-gradient-to-r from-purple-600/80 to-indigo-600/80">
-      <i class="fas fa-bullseye text-3xl text-yellow-300"></i>
+    <!-- CENTRAL BRAIN -->
+    <div class="brain-core">
+      <i class="fas fa-brain brain-icon"></i>
+    </div>
+
+    <!-- ORBITING BUBBLES -->
+    <div id="mission" class="orbit-bubble bg-gradient-to-r from-purple-600/90 to-indigo-600/90">
+      <i class="fas fa-bullseye bubble-icon text-yellow-300"></i>
       <div class="bubble-content">
-        <h3 class="text-lg font-bold">Mission</h3>
-        <p class="text-xs">Community-owned AGI – Open, Loyal, Monetizable.</p>
+        <strong>Mission</strong><br>Open, Loyal AGI
       </div>
     </div>
 
-    <!-- 2: Vision -->
-    <div id="vision" class="bubble w-52 h-52 bg-gradient-to-r from-indigo-600/80 to-blue-600/80">
-      <i class="fas fa-eye text-3xl text-green-300"></i>
+    <div id="vision" class="orbit-bubble bg-gradient-to-r from-indigo-600/90 to-blue-600/90">
+      <i class="fas fa-eye bubble-icon text-green-300"></i>
       <div class="bubble-content">
-        <h3 class="text-lg font-bold">Vision</h3>
-        <p class="text-xs">Loyal AI – GRID: 110+ partners.</p>
+        <strong>Vision</strong><br>GRID: 110+ Partners
       </div>
     </div>
 
-    <!-- 3: Funding -->
-    <div id="funding" class="bubble w-44 h-44 bg-gradient-to-r from-green-600/80 to-emerald-600/80">
-      <i class="fas fa-dollar-sign text-3xl text-lime-300"></i>
+    <div id="funding" class="orbit-bubble bg-gradient-to-r from-green-600/90 to-emerald-600/90">
+      <i class="fas fa-dollar-sign bubble-icon text-lime-300"></i>
       <div class="bubble-content">
-        <h3 class="text-base font-bold">Funding</h3>
-        <p class="text-xs">$85M Seed – Thiel, Pantera</p>
+        <strong>Funding</strong><br>$85M Seed
       </div>
     </div>
 
-    <!-- 4: Team -->
-    <div id="team" class="bubble w-56 h-56 bg-gradient-to-r from-orange-600/80 to-red-600/80">
-      <i class="fas fa-users text-3xl text-orange-300"></i>
+    <div id="team" class="orbit-bubble bg-gradient-to-r from-orange-600/90 to-red-600/90">
+      <i class="fas fa-users bubble-icon text-orange-300"></i>
       <div class="bubble-content">
-        <h3 class="text-lg font-bold">Team</h3>
-        <p class="text-xs">Sandeep Nailwal • 50+ PhDs</p>
+        <strong>Team</strong><br>Sandeep + 50 PhDs
       </div>
     </div>
 
-    <!-- 5: TGE -->
-    <div id="tge" class="bubble w-48 h-48 bg-gradient-to-r from-pink-600/80 to-rose-600/80">
-      <i class="fas fa-rocket text-3xl text-pink-300 tge-badge"></i>
+    <div id="tge" class="orbit-bubble bg-gradient-to-r from-pink-600/90 to-rose-600/90">
+      
+      
+      <i class="fas fa-rocket bubble-icon text-pink-300 tge-badge"></i>
       <div class="bubble-content">
-        <h3 class="text-lg font-bold">TGE NOV 2025</h3>
-        <p class="text-xs text-yellow-300 font-bold">$SENT Gas + Staking</p>
+        <strong>TGE</strong><br>NOV 2025
       </div>
     </div>
 
-    <!-- 6: Product -->
-    <div id="product" class="bubble w-52 h-52 bg-gradient-to-r from-cyan-600/80 to-teal-600/80">
-      <i class="fas fa-cogs text-3xl text-cyan-300"></i>
+    <div id="product" class="orbit-bubble bg-gradient-to-r from-cyan-600/90 to-teal-600/90">
+      <i class="fas fa-cogs bubble-icon text-cyan-300"></i>
       <div class="bubble-content">
-        <h3 class="text-lg font-bold">Products</h3>
-        <p class="text-xs">ROMA • OML • Chat • Dobby</p>
+        <strong>Products</strong><br>ROMA • OML • Chat
       </div>
     </div>
 
-    <!-- 7: Socials -->
-    <div id="socials" class="bubble w-44 h-44 bg-gradient-to-r from-yellow-600/80 to-amber-600/80">
-      <i class="fas fa-share-alt text-3xl text-yellow-300"></i>
-      <div class="bubble-content text-xs">
-        <div class="space-y-1">
-          <a href="https://x.com/SentientAGI" class="block text-cyan-200 hover:text-white"><i class="fab fa-x-twitter"></i> @SentientAGI</a>
-          <a href="https://discord.gg/sentient" class="block text-purple-200 hover:text-white"><i class="fab fa-discord"></i> Discord</a>
-          <a href="https://sentient.foundation" class="block text-green-200 hover:text-white"><i class="fas fa-globe"></i> Site</a>
-        </div>
+    <!-- SOCIALS (attached) -->
+    <div id="socials" class="orbit-bubble flex flex-col items-center justify-center text-xs">
+      <i class="fas fa-share-alt text-white mb-1"></i>
+      <div class="space-y-0.5">
+        <a href="https://x.com/SentientAGI" class="text-cyan-200 hover:text-white text-[10px]"><i class="fab fa-x-twitter"></i></a>
+        <a href="https://discord.gg/sentient" class="text-purple-200 hover:text-white text-[10px]"><i class="fab fa-discord"></i></a>
       </div>
     </div>
 
   </div>
 
-  <!-- CTA Footer -->
-  <div id="join" class="mt-20 text-center z-20 w-full max-w-3xl">
-    <h2 class="text-2xl md:text-3xl font-black mb-5 tge-badge">Ready for $SENT Airdrop?</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-      <a href="https://discord.gg/sentient" class="connect-btn"><i class="fab fa-discord mr-2"></i>Discord</a>
-      <a href="https://x.com/SentientAGI" class="connect-btn"><i class="fab fa-x-twitter mr-2"></i>X</a>
-      <a href="https://sentient.foundation" class="connect-btn"><i class="fas fa-rocket mr-2"></i>GRID</a>
+  <!-- CTA -->
+  <div class="text-center mt-10 z-20">
+    <div class="flex gap-2 justify-center flex-wrap">
+      <a href="https://discord.gg/sentient" class="connect-btn"><i class="fab fa-discord mr-1"></i>Discord</a>
+      <a href="https://x.com/SentientAGI" class="connect-btn"><i class="fab fa-x-twitter mr-1"></i>X</a>
+      <a href="https://sentient.foundation" class="connect-btn"><i class="fas fa-globe mr-1"></i>Site</a>
     </div>
-    <p class="mt-5 text-sm text-gray-300">gSenti to the Moon • TGE Loading…</p>
+    <p class="mt-3 text-xs text-gray-400">gSenti • TGE Loading…</p>
   </div>
 
-  <script>
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        e.preventDefault();
-        document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
-      });
-    });
-  </script>
 </body>
 </html>
